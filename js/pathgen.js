@@ -14,6 +14,19 @@ function generatePath(shape, angleThreshold) {
 
   var path = new Path();
 
+  var samples = 10;
+  for (var i = 0; i <= samples; i++) {
+    var time = i * (1 / samples);
+
+    var edgePoint1 = edgePath1.lerp(time);
+    var edgePoint2 = edgePath2.lerp(time);
+    console.log(time, edgePoint1, edgePath2);
+
+    var midpoint = edgePoint1.average(edgePoint2);
+
+    path.add(midpoint);
+  }
+
   return path;
 }
 
