@@ -1,7 +1,8 @@
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
-var shape = [
+var box = new Box(new Point(0, 0), new Point(400, 400));
+var shape = new Shape([
   new Point(60, 400),
   new Point(70, 280),
   new Point(90, 180),
@@ -15,29 +16,30 @@ var shape = [
   new Point(200, 240),
   new Point(170, 320),
   new Point(160, 400),
-];
+], box);
 
-function drawShape(shape) {
-  ctx.strokeStyle = 'green';
-  ctx.fillStyle = 'rgba(191, 255, 178, 0.48)';
+var angleThreshold, path;
+update();
 
-  ctx.beginPath();
-  ctx.lineWidth = 2;
-  ctx.moveTo(shape[0].x, shape[0].y);
-  shape.slice(1).forEach(function(point) {
-    ctx.lineTo(point.x, point.y);
-  });
-  ctx.closePath();
-  ctx.stroke();
-  ctx.fill();
-
-  ctx.strokeStyle = 'black';
-  ctx.fillStyle = 'black';
-  shape.forEach(function(point) {
-    ctx.beginPath();
-    ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.fill();
-  });
+function render() {
+  drawShape(shape);
+  drawPath(path);
 }
-drawShape(shape);
+
+function clearView() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function update() {
+  clearView();
+
+  angleThreshold = getAngleThreshold();
+  path = generatePath(shape, angleThreshold);
+
+  render();
+}
+
+function getAngleThreshold() {
+  return parseInt(document.getElementById('angle').value);
+}
+
