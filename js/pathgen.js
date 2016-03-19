@@ -1,4 +1,4 @@
-function generatePath(shape, angleThreshold) {
+function generatePath(shape) {
   if (shape.boundaryEdges.length !== 2) {
     throw new Error('Anything other than 2 boundary edges not supported');
   }

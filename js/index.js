@@ -18,7 +18,7 @@ var shape = new Shape([
   new Point(160, 400),
 ], box);
 
-var angleThreshold, path;
+var path;
 update();
 
 function render() {
@@ -33,13 +33,8 @@ function clearView() {
 function update() {
   clearView();
 
-  angleThreshold = getAngleThreshold();
-  path = generatePath(shape, angleThreshold);
+  path = generatePath(shape);
 
   render();
-}
-
-function getAngleThreshold() {
-  return parseInt(document.getElementById('angle').value);
 }
 
