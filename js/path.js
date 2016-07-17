@@ -42,11 +42,14 @@ Path.prototype.lerp = function(time) {
     return maxBound;
   }
 
+  console.log(time, distance, totalDistance, this.size, (totalDistance - distance) / this.size);
   var remaining = time - (totalDistance - distance) / this.size;
-  // Linear interpolation formula
-  var x = minBound.x + (maxBound.x - minBound.x) * remaining;
-  var y = (x - minBound.x) * (maxBound.y - minBound.y) / (maxBound.x - minBound.x) + minBound.y;
 
-  return new Point(x, y);
+  var distanceRemaining = distance * remaining;
+  var norm = maxBound.sub(minBound);
+  norm = norm.divide(norm.magnitude());
+
+  var result = norm.multiply(distanceRemaining);
+  return result;
 };
 
